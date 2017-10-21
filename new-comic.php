@@ -1,11 +1,50 @@
-<?php include("header.php") ?>
+<?php include("header.php"); ?>
 
-    <div class="container">
-        <div class="starter-template">
-            <h1>Bootstrap starter template</h1>
-            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-        </div>
-    </div>
-    <!-- /.container -->
+<?php 
+$title = $_POST["title"];
+$issue = $_POST["issue"];
+$year = $_POST["year"];
+$publisher = $_POST["publisher"];
 
-<?php include("footer.php") ?>
+if(insertComic($conn, $title, $issue, $year, $publisher)) {
+?>	
+
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-12 col-md-6 d-flex mx-auto">
+		
+				<div class="alert alert-success my-5 text-center mx-auto" role="alert">
+				  <b><?= $title; ?></b> was added to your Comics!
+				</div>
+
+			</div>
+			
+		</div>
+	</div>
+
+	
+	
+<?php } else { ?>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-md-6 d-flex mx-auto">
+  
+				<div class="alert alert-danger my-5 text-center mx-auto" role="alert">
+				  <b><?= $title; ?></b> could not be added. Try again later!
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+		<br>
+		
+	<?php mysqli_error($conn); ?>	
+
+ <?php		
+} 
+?>
+
+<?php include("footer.php"); ?>

@@ -26,10 +26,10 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link" href="index.html">My Comics</a>
+						<a class="nav-link" href="index.php">My Comics</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link btn btn-outline-secondary" href="new-comic.html">New Comic</a>
+						<a class="nav-link btn btn-outline-secondary" href="form-new-comic.php">New Comic</a>
 					</li>
 				</ul>
 			</div>

@@ -24,12 +24,6 @@
 					</thead>
 
 					<tbody>
-						<tr>
-							<td>Batman</td>
-							<td>19</td>
-							<td>DC Comics</td>
-							<td>2016</td>
-						</tr>
 						<?php
 							$comics = showComics($conn);
 							foreach($comics as $comic) :

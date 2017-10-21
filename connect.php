@@ -10,3 +10,10 @@ function showComics($conn) {
 	
 	return $comics;
 }
+
+function insertComic($conn, $title, $issue, $year, $publisher) {
+	$query = "INSERT INTO quadrinhos (titulo, edicao, ano, editora)
+				values('{$title}', '{$issue}', '{$year}', '{$publisher}')";
+	
+	return mysqli_query($conn, $query);
+}

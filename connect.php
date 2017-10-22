@@ -17,3 +17,9 @@ function insertComic($conn, $title, $issue, $year, $publisher) {
 	
 	return mysqli_query($conn, $query);
 }
+
+function deleteComic($conn, $id) {
+	$query = "DELETE FROM quadrinhos WHERE ID = {$id}";
+	
+	return mysqli_query($conn, $query);
+}

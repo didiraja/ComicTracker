@@ -12,6 +12,12 @@
         
 			<div class="col-md-12">
 			
+				<?php if(array_key_exists("delete", $_GET) && $_GET['delete']=='true') { ?>
+					<div class="alert alert-success text-center" role="alert">
+				  		Comic deleted with success!
+					</div>
+				<?php } ?>
+			
 				<table class="table table-hover table-striped">
 
 					<thead>
@@ -20,6 +26,7 @@
 							<td><b>Issue</b></td>
 							<td><b>Publisher</b></td>
 							<td><b>Year</b></td>
+							<td><b></b></td>
 						</tr>
 					</thead>
 
@@ -33,6 +40,12 @@
 							<td><?= $comic['edicao'] ?></td>
 							<td><?= $comic['editora'] ?></td>
 							<td><?= $comic['ano'] ?></td>
+							<td>
+								<form method="post" action="delete-comic.php">
+									<input type="hidden" name="id" value="<?=$comic['id']?>" />
+									<button type="submit" class="btn btn-danger">Delete</button>
+								</form>
+							</td>
 						</tr>
 						<?php
 							endforeach

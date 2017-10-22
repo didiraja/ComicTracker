@@ -10,9 +10,9 @@ if(insertComic($conn, $title, $issue, $year, $publisher)) {
 ?>	
 
 	<div class="container">
-		<div class="row">
+		<div class="row d-flex">
 			
-			<div class="col-12 col-md-6 d-flex mx-auto">
+			<div class="col-12 col-md-6 justify-content-center">
 		
 				<div class="alert alert-success my-5 text-center mx-auto" role="alert">
 				  <b><?= $title; ?></b> was added to your Comics!
@@ -28,8 +28,8 @@ if(insertComic($conn, $title, $issue, $year, $publisher)) {
 <?php } else { ?>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-12 col-md-6 d-flex mx-auto">
+		<div class="row d-flex">
+			<div class="col-12 col-md-6 justify-content-center">
   
 				<div class="alert alert-danger my-5 text-center mx-auto" role="alert">
 				  <b><?= $title; ?></b> could not be added. Try again later!

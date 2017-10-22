@@ -2,8 +2,8 @@
 
     <div class="container">
         
-		<div class="row">
-			<div class="col-12 col-md-4">
+		<div class="row d-flex">
+			<div class="col-12 col-md-4 mx-auto">
 			
 				<h2 class="my-4 text-center">New Comic</h2>	
 			

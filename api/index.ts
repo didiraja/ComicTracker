@@ -1,7 +1,7 @@
 import express, { Request } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { QUERIES } from "./enum";
+import { GetComics, AddComic } from "./routes";
 
 dotenv.config();
 
@@ -12,10 +12,9 @@ app.use(express.json())
 app.use(cors())
 
 import sqlite3 from 'sqlite3';
-import { isNumberObject } from "util/types";
 
 // Create a new SQLite database and open a connection
-const db = new sqlite3.Database('./comictracker.db');
+export const db = new sqlite3.Database('./comictracker.db');
 
 // Create the "comics" table
 db.serialize(() => {
@@ -71,69 +70,11 @@ db.serialize(() => {
 // });
 
 
-app.get("/", (req, res) => {
-  res.send("Express + Typescript Server running");
-});
+app.get("/", (_, res) => res.send("Express + Typescript Server running"));
 
-app.get('/comics', (req, res) => {
-  const categories = ['comics', 'publishers', 'writers', 'pencillers'];
-  const data: any = {};
-
-  categories.forEach((cat) => {
-    db.all(`SELECT * FROM ${cat}`, (err, rows) => {
-      if (err) {
-        console.error(err);
-      } else {
-        data[cat] = rows;
-      }
-
-      // Check if all categories have been processed
-      if (Object.keys(data).length === categories.length) {
-        res.status(200).json(data);
-      }
-    });
-  });
-});
+app.get('/comics', GetComics);
 
 
-app.post('/comics', async (req, res) => {
+app.post('/comics', AddComic);
 
-  const { publisher_id, title, issue, year, writer_id, penciller_id } = req.body;
-  
-  async function writerName() {
-    let output: any = {
-      "title": "Asdfdsfsd dsFDSFsd",
-      "publisher_id": 2,
-      "issue": "5",
-      "year": "2006",
-      "writer_id": '',
-      "penciller_id": 3
-    }
-
-    try {
-      const writer: {id: number, name: string} = await new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM writers WHERE id = ${writer_id}`, (err: any, rows: {id: number, name: string}) => {
-          if (err) {
-            console.error(err);
-            reject(err);
-          } else {
-            resolve(rows);
-          }
-        });
-      });
-      
-      output['writer_id'] = writer.name;
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-
-    res.status(200).send(output);
-  }
-
-  return writerName();
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+app.listen(port, () => console.log(`Server running on port ${port}`));

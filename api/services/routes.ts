@@ -1,30 +1,27 @@
 import { Request, Response } from "express"
-import { db } from ".";
-import { NameFromID } from "./types";
+import { db } from "./database";
+import { NameFromID } from "../types";
+import { QUERIES }  from '../enum';
 
 export const GetComics = (_: Request, res: Response) => {
-  const categories = ['comics', 'publishers', 'writers', 'pencillers'];
-  const data: any = {};
 
-  categories.forEach((cat) => {
-    db.all(`SELECT * FROM ${cat}`, (err, rows) => {
-      if (err) {
-        console.error(err);
-      } else {
-        data[cat] = rows;
-      }
+  db.all(QUERIES.GET_COMICS, (err, rows) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({
+        msg: "Something went wrong. Couldn't found comics."
+      });
+    } 
 
-      // Check if all categories have been processed
-      if (Object.keys(data).length === categories.length) {
-        res.status(200).json(data);
-      }
-    });
+    res.status(200).json(rows);
   });
 }
 
 export const AddComic = (req: Request, res: Response) => {
+
   const { publisher_id, title, issue, year, writer_id, penciller_id } = req.body;
 
+  // INSERT ITSELF
   db.run(
     `INSERT INTO comics (publisher_id, title, issue, year, writer_id, penciller_id)
     VALUES (?, ?, ?, ?, ?, ?)`,
@@ -37,6 +34,7 @@ export const AddComic = (req: Request, res: Response) => {
     }
   );
   
+  // BUILD RESPONSE DATA
   async function getNameFromIds() {
     
     const result: NameFromID[] = await new Promise((resolve, reject) => {

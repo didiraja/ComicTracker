@@ -1,5 +1,4 @@
 export const QUERIES = {
-  DELETE_AHEAD: "DELETE FROM publishers WHERE id > 4",
   CREATE_TABLE: `CREATE TABLE "comics" (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     publisher_id INTEGER NOT NULL,

@@ -19,13 +19,13 @@ export const GetComics = (_: Request, res: Response) => {
 
 export const AddComic = (req: Request, res: Response) => {
 
-  const { publisher_id, title, issue, year, writer_id, penciller_id } = req.body;
+  const { publisher_id, title, issue, year, writer_id, illustrator_id } = req.body;
 
   // INSERT ITSELF
   db.run(
-    `INSERT INTO comics (publisher_id, title, issue, year, writer_id, penciller_id)
+    `INSERT INTO comics (publisher_id, title, issue, year, writer_id, illustrator_id)
     VALUES (?, ?, ?, ?, ?, ?)`,
-    [publisher_id, title, issue, year, writer_id, penciller_id],
+    [publisher_id, title, issue, year, writer_id, illustrator_id],
     function (err) {
       if (err) {
         console.error(err);
@@ -42,7 +42,7 @@ export const AddComic = (req: Request, res: Response) => {
       UNION ALL
       SELECT 'writers' AS key, name FROM writers WHERE id = ${writer_id}
       UNION ALL
-      SELECT 'pencillers' AS key, name FROM pencillers WHERE id = ${penciller_id};`, (err: any, rows: NameFromID[]) => {
+      SELECT 'illustrators' AS key, name FROM illustrators WHERE id = ${illustrator_id};`, (err: any, rows: NameFromID[]) => {
         if (err) {
           console.error(err);
           reject(err);
@@ -58,7 +58,7 @@ export const AddComic = (req: Request, res: Response) => {
       issue,
       year,
       writer_id: result[1].name,
-      penciller_id: result[2].name
+      illustrator_id: result[2].name
     }
 
     res.status(200).send({

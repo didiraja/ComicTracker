@@ -1,3 +1,13 @@
+# CLONE TABLE
+
+```sql
+  CREATE TABLE new_table AS SELECT * FROM original_table;
+```
+# RENAME TABLE
+
+```sql
+  ALTER TABLE old_name RENAME TO new_name;
+```
 # DELETE_AHEAD
 
 ```sql
@@ -14,10 +24,10 @@
   issue INTEGER NOT NULL,
   year INTEGER NOT NULL,
   writer_id INTEGER NOT NULL,
-  penciller_id INTEGER NOT NULL,
+  illustrator_id INTEGER NOT NULL,
   FOREIGN KEY (publisher_id) REFERENCES publishers(id),
   FOREIGN KEY (writer_id) REFERENCES writers(id),
-  FOREIGN KEY (penciller_id) REFERENCES pencillers(id)
+  FOREIGN KEY (illustrator_id) REFERENCES illustrators(id)
   )
 ```
 

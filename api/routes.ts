@@ -1,7 +1,8 @@
 import { Request, Response } from "express"
 import { db } from ".";
+import { NameFromID } from "./types";
 
-export const GetComics = (req: Request, res: Response) => {
+export const GetComics = (_: Request, res: Response) => {
   const categories = ['comics', 'publishers', 'writers', 'pencillers'];
   const data: any = {};
 
@@ -23,37 +24,50 @@ export const GetComics = (req: Request, res: Response) => {
 
 export const AddComic = (req: Request, res: Response) => {
   const { publisher_id, title, issue, year, writer_id, penciller_id } = req.body;
+
+  db.run(
+    `INSERT INTO comics (publisher_id, title, issue, year, writer_id, penciller_id)
+    VALUES (?, ?, ?, ?, ?, ?)`,
+    [publisher_id, title, issue, year, writer_id, penciller_id],
+    function (err) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to create comic' });
+      }
+    }
+  );
   
-  async function writerName() {
-    let output: any = {
-      "title": "Asdfdsfsd dsFDSFsd",
-      "publisher_id": 2,
-      "issue": "5",
-      "year": "2006",
-      "writer_id": '',
-      "penciller_id": 3
-    }
-
-    try {
-      const writer: {id: number, name: string} = await new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM writers WHERE id = ${writer_id}`, (err: any, rows: {id: number, name: string}) => {
-          if (err) {
-            console.error(err);
-            reject(err);
-          } else {
-            resolve(rows);
-          }
-        });
+  async function getNameFromIds() {
+    
+    const result: NameFromID[] = await new Promise((resolve, reject) => {
+      db.all(`SELECT 'publishers' AS key, name FROM publishers WHERE id = ${publisher_id}
+      UNION ALL
+      SELECT 'writers' AS key, name FROM writers WHERE id = ${writer_id}
+      UNION ALL
+      SELECT 'pencillers' AS key, name FROM pencillers WHERE id = ${penciller_id};`, (err: any, rows: NameFromID[]) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          resolve(rows);
+        }
       });
-      
-      output['writer_id'] = writer.name;
-    } catch (err) {
-      console.error(err);
-      return null;
+    });
+
+    const response = {
+      title,
+      publisher_id: result[0].name,
+      issue,
+      year,
+      writer_id: result[1].name,
+      penciller_id: result[2].name
     }
 
-    res.status(200).send(output);
+    res.status(200).send({
+      msg: "Comic added sucessfully!",
+      data: response,
+    });
   }
 
-  return writerName();
+  return getNameFromIds();
 }

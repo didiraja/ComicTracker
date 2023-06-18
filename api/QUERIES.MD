@@ -1,7 +1,7 @@
 # DELETE_AHEAD
 
 ```sql
-  DELETE FROM publishers WHERE id > 4
+  DELETE FROM publishers WHERE id > $
 ```
 
 # CREATE_TABLE

@@ -1,6 +1,6 @@
 # Minimal CRUD
 
-#### *"It creates, it reads, updates and deletes data??? OMG, its a complete CRUD!!!"*
+### *"It creates, it reads, updates and deletes data??? OMG, its a complete CRUD!!!"*
 
 ### Api
   - Node

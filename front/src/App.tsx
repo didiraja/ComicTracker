@@ -1,5 +1,6 @@
+import Form from './components/Form'
 import DataTable from './components/DataTable'
-import './App.css'
+import './App.scss'
 
 export type InterfaceComic = {
   id: number;
@@ -45,7 +46,8 @@ function App() {
 
   return (
     <>
-      <h1 className="text-5xl font-bold mb-8">ComicTracker</h1>
+      <h1 className="title-main">ComicTracker</h1>
+      <Form />
       <DataTable data={comics} />
     </>
   )

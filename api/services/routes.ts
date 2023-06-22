@@ -61,18 +61,80 @@ export const AddComic = (req: Request, res: Response) => {
 }
 
 // R
-export const GetComics = (_: Request, res: Response) => {
+export const GetDashboardData = (_: Request, res: Response) => {
 
-  db.all(QUERIES.GET_COMICS, (err, rows) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({
-        msg: "Something went wrong. Couldn't found comics."
+  async function getEachKey() {
+
+    try {
+      const publishers = await new Promise((resolve, reject) => {
+        db.all(QUERIES.GET_PUBLISHERS, (err, rows) => {
+          if (err) {
+            console.error(err);
+            reject({
+              msg: "Something went wrong. Couldn't found publishers."
+            });
+          } 
+      
+          resolve(rows)
+        });
       });
-    } 
 
-    res.status(200).json(rows);
-  });
+      const writers = await new Promise((resolve, reject) => {
+        db.all(QUERIES.GET_WRITERS, (err, rows) => {
+          if (err) {
+            console.error(err);
+            reject({
+              msg: "Something went wrong. Couldn't found writers."
+            });
+          } 
+      
+          resolve(rows)
+        });
+      });
+
+      const illustrators = await new Promise((resolve, reject) => {
+        db.all(QUERIES.GET_ILLUSTRATORS, (err, rows) => {
+          if (err) {
+            console.error(err);
+            reject({
+              msg: "Something went wrong. Couldn't found illustrators."
+            });
+          } 
+      
+          resolve(rows)
+        });
+      });
+
+      const comics = await new Promise((resolve, reject) => {
+        db.all(QUERIES.GET_COMICS, (err, rows) => {
+          if (err) {
+            console.error(err);
+            reject({
+              msg: "Something went wrong. Couldn't found comics."
+            });
+          } 
+      
+          resolve(rows)
+        });
+      });
+
+      const output = {
+        publishers,
+        writers,
+        illustrators,
+        comics,
+      };
+
+      return res.status(200).send(output);
+    }
+    catch(e) {
+      console.log(e);
+      
+      return res.status(500).json({ error: 'Failed to complete operation' });
+    }
+  };
+
+  return getEachKey();
 }
 
 // U
@@ -88,7 +150,7 @@ export const EditComic = (req: Request, res: Response) => {
           console.error(err);
           res.status(500).json({ error: 'Failed to update comic' });
         } else {
-          res.status(200).json({ message: 'Comic updated successfully' });
+          res.status(200).json({ msg: 'Comic updated successfully' });
         }
       }
     );
@@ -111,7 +173,7 @@ export const DeleteComic = (req: Request, res: Response) => {
         } else if (this.changes === 0) {
           res.status(404).json({ error: 'Comic not found' });
         } else {
-          res.status(200).json({ message: 'Comic deleted successfully' });
+          res.status(200).json({ msg: 'Comic deleted successfully' });
         }
       }
     );

@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import { StartingDB } from "./services/database";
-import { GetComics, AddComic, EditComic, DeleteComic } from "./services/routes";
+import { GetDashboardData, AddComic, EditComic, DeleteComic } from "./services/routes";
 
 /**
  * DATABASE
@@ -23,7 +23,7 @@ app.use(cors())
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
-app.get('/comics', GetComics);
+app.get('/dashboard', GetDashboardData);
 
 app.post('/comics', AddComic);
 

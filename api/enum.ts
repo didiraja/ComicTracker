@@ -1,4 +1,5 @@
 export const QUERIES = {
+  // C
   CREATE_COMICS: `CREATE TABLE IF NOT EXISTS "comics" (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     publisher_id INTEGER NOT NULL,
@@ -17,6 +18,7 @@ export const QUERIES = {
     name VARCHAR(255) NOT NULL UNIQUE
   )
 `,
+  DEFAULT_PUBLISHERS: 'INSERT OR IGNORE INTO publishers (name) VALUES (?)',
   CREATE_WRITERS: `
   CREATE TABLE IF NOT EXISTS writers (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -29,12 +31,21 @@ export const QUERIES = {
     name VARCHAR(255) NOT NULL UNIQUE
   )
 `,
-  DEFAULT_PUBLISHERS: 'INSERT OR IGNORE INTO publishers (name) VALUES (?)',
-  GET_COMICS: 'SELECT * FROM comics',
   NEW_COMIC: `INSERT INTO comics (publisher_id, title, issue, year, writer_id, illustrator_id)
   VALUES (?, ?, ?, ?, ?, ?)`,
+  // R
+  GET_PUBLISHERS: 'SELECT * from publishers',
+  GET_WRITERS: 'SELECT * from writers',
+  GET_ILLUSTRATORS: 'SELECT * from illustrators',
+  GET_COMICS: `SELECT c.id, c.title, p.name AS publisher, w.name AS writer, i.name AS illustrator
+  FROM comics c
+  JOIN publishers p ON c.publisher_id = p.id
+  JOIN writers w ON c.writer_id = w.id
+  JOIN illustrators i ON c.illustrator_id = i.id;`,
+  // U
   EDIT_COMIC: `UPDATE comics
   SET publisher_id = ?, title = ?, issue = ?, year = ?, writer_id = ?, illustrator_id = ?
   WHERE id = ?`,
+  // D
   DELETE_COMIC: `DELETE FROM comics WHERE id = ?`
 }

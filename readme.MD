@@ -14,6 +14,7 @@
   - Vite 
   - React
   - Typescript
+  - Sass
 
 # Demo
-- not yet
+- [Click here](https://comic-tracker.vercel.app/)

@@ -37,7 +37,7 @@ export const QUERIES = {
   GET_PUBLISHERS: 'SELECT * from publishers',
   GET_WRITERS: 'SELECT * from writers',
   GET_ILLUSTRATORS: 'SELECT * from illustrators',
-  GET_COMICS: `SELECT c.id, c.title, p.name AS publisher, w.name AS writer, i.name AS illustrator
+  GET_COMICS: `SELECT c.id, c.title, c.issue, c.year, p.name AS publisher, w.name AS writer, i.name AS illustrator
   FROM comics c
   JOIN publishers p ON c.publisher_id = p.id
   JOIN writers w ON c.writer_id = w.id

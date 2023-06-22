@@ -1,4 +1,7 @@
+# General
 **/node_modules/
 **/dist/
 **/package-lock.json
+
+# Front
 **/.vite/

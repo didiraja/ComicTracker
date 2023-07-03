@@ -23,14 +23,22 @@ app.use(cors())
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
+/**
+ * GET
+ */
+app.get("/", (_, res) => res.status(200).send('<h1>Server up and running</h1>'));
+
 app.get('/dashboard', GetDashboardData);
-
-app.post('/comics', AddComic);
-
-app.post('/comic', EditComic);
 
 app.get('/comic/:id', DeleteComic);
 
 app.get("*", (_, res) => res.status(404).send({
-  msg: "What are you doing here?"
+  msg: "Nothing to see here"
 }));
+
+/**
+ * POST
+ */
+app.post('/comics', AddComic);
+
+app.post('/comic', EditComic);

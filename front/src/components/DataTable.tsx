@@ -9,13 +9,13 @@ const DataTable = ({ data = [] }: { data: IComic[] }) => {
           <table className="table-element">
             <thead>
               <tr>
-                <th scope="col" className="px-6 py-4">Publisher</th>
-                <th scope="col" className="px-6 py-4">Title</th>
-                <th scope="col" className="px-6 py-4">Issue</th>
-                <th scope="col" className="px-6 py-4">Year</th>
-                <th scope="col" className="px-6 py-4">Writer</th>
-                <th scope="col" className="px-6 py-4">Ilustrator</th>
-                <th scope="col" className="px-6 py-4">Meta</th>
+                <th scope="col" className="table-head">Publisher</th>
+                <th scope="col" className="table-head">Title</th>
+                <th scope="col" className="table-head">Issue</th>
+                <th scope="col" className="table-head">Year</th>
+                <th scope="col" className="table-head">Writer</th>
+                <th scope="col" className="table-head">Ilustrator</th>
+                {/* <th scope="col" className="table-head">Meta</th> */}
               </tr>
             </thead>
             <tbody>
@@ -28,10 +28,10 @@ const DataTable = ({ data = [] }: { data: IComic[] }) => {
                     <td className="table-item">{item.year}</td>
                     <td className="table-item">{item.writer}</td>
                     <td className="table-item">{item.illustrator}</td>
-                    <td className="table-item">
+                    {/* <td className="table-item">
                       <button type="button" className="btn edit-btn">Edit</button>
                       <button type="button" className="btn delete-btn">Delete</button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))
               }

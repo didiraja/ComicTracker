@@ -20,6 +20,10 @@ tbody {
   }
 }
 
+.table-head {
+  @apply px-6 py-4;
+}
+
 .table-item {
   @apply whitespace-nowrap px-6 py-4;
 

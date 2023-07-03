@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "npx tsc",
+    "dev": "concurrently \"npm run watch-ts\" \"npm run nodemon-start\"",
     "start": "node dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+    "serve": "npm i; npm run build;",
+    "build": "npx tsc",
+    "nodemon-start": "nodemon -q dist/index.js",
+    "watch-ts": "npx tsc --watch"
   },
   "keywords": [],
   "author": "",

@@ -1,7 +1,7 @@
 import './DataTable.scss';
 import { IComic } from '../App';
 
-const DataTable = ({ data }: { data: IComic[] }) => {
+const DataTable = ({ data = [] }: { data: IComic[] }) => {
   return (
     <div className="bg-gray-900 rounded-lg overflow-hidden border border-gray-700">
       <div className="sm:-mx-6 lg:-mx-8">

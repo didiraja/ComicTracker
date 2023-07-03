@@ -2,6 +2,10 @@
   @apply max-w-[90%] mx-auto bg-gray-600/50 rounded-md py-5 px-8 mb-8;
 }
 
+#form {
+  @apply mb-5 grid grid-cols-3 gap-6;
+}
+
 .label {
   @apply block text-xs text-left mb-2;
 }

@@ -1,8 +1,8 @@
+import { useEffect, useState } from 'react'
+import { fetchData } from './services'
 import Form from './components/Form'
 import DataTable from './components/DataTable'
 import './App.scss'
-import { useEffect, useState } from 'react'
-import { fetchData } from './services'
 
 export type IComic = {
   id: number;
@@ -59,8 +59,7 @@ function App() {
   return (
     <>
       <h1 className="title-main">ComicTracker</h1>
-      <Form />
-
+      <Form data={dashData} />
       <DataTable data={dashData.comics} />
     </>
   )

@@ -1,19 +1,21 @@
+import { DashboardData, ICategory } from '../App';
 import './Form.scss';
 
-const Form = () => {
+const Form = ({ data }: { data: DashboardData }) => {
   return (
     <div className="form-wrapper">
       <h3 className="title-section">Add New Comic</h3>
 
-      <div id="form" className="mb-5 grid grid-cols-3 gap-6">
+      <div id="form">
         <div>
           <label className="label" htmlFor="publisher">Publisher</label>
 
           <select className="form-default" name="publisher">
-            <option>Marvel</option>
-            <option>DC</option>
-            <option>Image</option>
-            <option>Mangá</option>
+            {
+              data.publishers?.map((pub: ICategory) => (
+                <option key={pub.id} value={pub.id}>{pub.name}</option>
+              ))
+            }
           </select>
         </div>
 
@@ -39,9 +41,9 @@ const Form = () => {
           <label className="label" htmlFor="writer">Writer</label>
 
           <select className="form-default" name="writer">
-            <option>Jonathan Hickman</option>
-            <option>Tom King</option>
-            <option>Brain K. Vaughan</option>
+            {data.writers?.map((writer: ICategory) => (
+              <option key={writer.id} value={writer.id}>{writer.name}</option>
+            ))}
           </select>
         </div>
 
@@ -49,9 +51,9 @@ const Form = () => {
           <label className="label" htmlFor="illustrator">Illustrator</label>
 
           <select className="form-default" name="illustrator">
-            <option>Chris Bachallo</option>
-            <option>Nick Derandt</option>
-            <option>Cliff Chiang</option>
+            {data.illustrators?.map((illustrator: ICategory) => (
+              <option key={illustrator.id} value={illustrator.id}>{illustrator.name}</option>
+            ))}
           </select>
         </div>
 

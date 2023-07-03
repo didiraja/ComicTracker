@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { fetchData } from './services'
+import { fetchData, addComic } from './services'
 import Form from './components/Form'
 import DataTable from './components/DataTable'
 import './App.scss'
@@ -28,30 +28,45 @@ export type DashboardData = {
 
 function App() {
 
-  const [dashData, setDashData] = useState<DashboardData>({
+  const INITIAL_DASH = {
     comics: [],
     publishers: [],
     writers: [],
     illustrators: [],
-  });
+  }
+
+  const [dashData, setDashData] = useState<DashboardData>(INITIAL_DASH);
+
+  const fetchDash = async () => {
+
+    try {
+
+      const data = await fetchData(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/dashboard`);
+
+      setDashData(data);
+
+    } catch (error) {
+
+      console.error("Error:", error);
+
+      return {}
+    }
+  }
+
+  const newComicFlow = () => {
+
+    try {
+      addComic(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comics`)
+    }
+    catch (e) {
+      console.log(e);
+    }
+    finally {
+      setTimeout(() => fetchDash(), 1000)
+    }
+  }
 
   useEffect(() => {
-
-    const fetchDash = async () => {
-
-      try {
-
-        const data = await fetchData(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/dashboard`);
-
-        setDashData(data);
-
-      } catch (error) {
-
-        console.error("Error:", error);
-
-        return {}
-      }
-    }
 
     fetchDash()
   }, [])
@@ -59,7 +74,7 @@ function App() {
   return (
     <>
       <h1 className="title-main">ComicTracker</h1>
-      <Form data={dashData} />
+      <Form data={dashData} submit={() => newComicFlow()} />
       <DataTable data={dashData.comics} />
     </>
   )

@@ -1,10 +1,10 @@
 import { DashboardData, ICategory } from '../App';
 import './Form.scss';
 
-const Form = ({ data }: { data: DashboardData }) => {
+const Form = ({ data, submit }: { data: DashboardData, submit: () => void }) => {
   return (
     <div className="form-wrapper">
-      <h3 className="title-section">Add New Comic</h3>
+      {/* <h3 className="title-section">Add New Comic</h3> */}
 
       <div id="form">
         <div>
@@ -58,6 +58,12 @@ const Form = ({ data }: { data: DashboardData }) => {
         </div>
 
       </div>
+
+      <button
+        className='rounded px-5 py-3 font-bold uppercase bg-gray-500'
+        onClick={() => submit()}>
+        Add New Comic
+      </button>
     </div>
   );
 }

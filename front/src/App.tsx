@@ -18,16 +18,18 @@ export type ICategory = {
   name: string;
 }
 
-export type DashboardData = undefined | {
-  comics: IComic[] | undefined;
-  publishers: ICategory[] | undefined;
-  writers: ICategory[] | undefined;
-  illustrators: ICategory[] | undefined;
+export type DashboardData = {} | {
+  comics?: IComic[];
+  publishers?: ICategory[];
+  writers?: ICategory[];
+  illustrators?: ICategory[];
 }
 
 function App() {
 
-  const [dashData, setDashData] = useState({});
+  const [dashData, setDashData] = useState({
+    comics: [],
+  });
 
   useEffect(() => {
 

@@ -1,5 +1,5 @@
 .form-wrapper {
-  @apply max-w-[90%] mx-auto bg-gray-600/50 rounded-md py-5 px-8 mb-8;
+  @apply max-w-[90%] mx-auto /* bg-gray-600/50 */ rounded-md py-5 px-8 mb-8;
 }
 
 #form {
@@ -11,5 +11,13 @@
 }
 
 .form-default {
-  @apply block w-full rounded-md bg-gray-900 border border-gray-700 shadow-sm p-2;
+  @apply block w-full rounded-md bg-transparent border border-slate-300 shadow-sm p-2;
+
+  option {
+    @apply text-black;
+  }
+}
+
+.btn-submit {
+  @apply rounded px-5 py-3 font-bold uppercase bg-purple-900 hover:bg-purple-800 active:bg-purple-950 border border-purple-500;
 }

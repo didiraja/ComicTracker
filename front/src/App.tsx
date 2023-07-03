@@ -62,7 +62,7 @@ function App() {
       console.log(e);
     }
     finally {
-      setTimeout(() => fetchDash(), 1000)
+      setTimeout(() => fetchDash(), 1500)
     }
   }
 
@@ -74,7 +74,7 @@ function App() {
   return (
     <>
       <h1 className="title-main">ComicTracker</h1>
-      <Form data={dashData} submit={() => newComicFlow()} />
+      <Form data={dashData} submit={newComicFlow} />
       <DataTable data={dashData.comics} />
     </>
   )

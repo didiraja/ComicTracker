@@ -60,7 +60,7 @@ const Form = ({ data, submit }: { data: DashboardData, submit: () => void }) => 
       </div>
 
       <button
-        className='rounded px-5 py-3 font-bold uppercase bg-gray-500'
+        className='btn-submit'
         onClick={() => submit()}>
         Add New Comic
       </button>

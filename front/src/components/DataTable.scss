@@ -1,5 +1,5 @@
 .table-wrapper {
-  @apply bg-gray-900 rounded-lg overflow-hidden border border-gray-700;
+  @apply bg-indigo-950 rounded-sm overflow-hidden border border-indigo-700;
 }
 
 .table-overflow {
@@ -16,7 +16,7 @@
 
 tbody {
   tr:nth-child(odd) {
-    @apply bg-gray-800;
+    @apply bg-indigo-900;
   }
 }
 
@@ -31,7 +31,7 @@ tbody {
     @apply rounded p-2 text-sm uppercase leading-normal text-white;
 
     &.edit-btn {
-      @apply bg-indigo-500 hover:bg-indigo-600 mr-2;
+      @apply bg-purple-500 hover:bg-purple-600 mr-2;
     }
 
     &.delete-btn {

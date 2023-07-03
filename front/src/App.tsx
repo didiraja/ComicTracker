@@ -35,7 +35,7 @@ function App() {
 
       try {
 
-        const response = await fetch('http://localhost:5200/dashboard');
+        const response = await fetch(`http://${import.meta.env.DEV ? 'localhost:5200' : 'comictracker.onrender.com'}/dashboard`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

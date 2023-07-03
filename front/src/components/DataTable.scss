@@ -1,5 +1,37 @@
+.table-wrapper {
+  @apply bg-gray-900 rounded-lg overflow-hidden border border-gray-700;
+}
+
+.table-overflow {
+  @apply sm:-mx-6 lg:-mx-8;
+}
+
+.table-positioning {
+  @apply min-w-full sm:px-6 lg:px-8 overflow-auto;
+}
+
+.table-element {
+  @apply min-w-full text-left;
+}
+
 tbody {
   tr:nth-child(odd) {
     @apply bg-gray-800;
+  }
+}
+
+.table-item {
+  @apply whitespace-nowrap px-6 py-4;
+
+  .btn {
+    @apply rounded p-2 text-sm uppercase leading-normal text-white;
+
+    &.edit-btn {
+      @apply bg-indigo-500 hover:bg-indigo-600 mr-2;
+    }
+
+    &.delete-btn {
+      @apply bg-red-500 hover:bg-red-600;
+    }
   }
 }

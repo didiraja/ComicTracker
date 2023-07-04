@@ -21,43 +21,12 @@ export const AddComic = (req: Request, res: Response) => {
     );
   } catch {
     res.status(500).json({ error: 'Failed to complete operation' });
-  }
-  
-  // BUILD RESPONSE DATA
-  async function getNameFromIds() {
-    
-    const result: NameFromID[] = await new Promise((resolve, reject) => {
-      db.all(`SELECT 'publishers' AS key, name FROM publishers WHERE id = ${publisher_id}
-      UNION ALL
-      SELECT 'writers' AS key, name FROM writers WHERE id = ${writer_id}
-      UNION ALL
-      SELECT 'illustrators' AS key, name FROM illustrators WHERE id = ${illustrator_id};`,
-      (err: any, rows: NameFromID[]) => {
-        if (err) {
-          console.error(err);
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
-
-    const response = {
-      title,
-      publisher_id: result[0].name,
-      issue,
-      year,
-      writer_id: result[1].name,
-      illustrator_id: result[2].name
-    }
+  } finally {
 
     res.status(200).send({
       msg: "Comic added sucessfully!",
-      data: response,
     });
   }
-
-  return getNameFromIds();
 }
 
 // R

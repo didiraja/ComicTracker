@@ -27,7 +27,6 @@ export type DashboardData = {
 }
 
 function App() {
-
   const INITIAL_DASH = {
     comics: [],
     publishers: [],
@@ -38,36 +37,30 @@ function App() {
   const [dashData, setDashData] = useState<DashboardData>(INITIAL_DASH);
 
   const fetchDash = async () => {
-
     try {
-
       const data = await fetchData(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/dashboard`);
 
       setDashData(data);
-
     } catch (error) {
-
       console.error("Error:", error);
 
       return {}
     }
   }
 
-  const newComicFlow = () => {
-
+  const newComicFlow = async () => {
     try {
-      addComic(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comics`)
+      await addComic(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comics`)
     }
     catch (e) {
       console.log(e);
     }
     finally {
-      setTimeout(() => fetchDash(), 1500)
+      fetchDash()
     }
   }
 
   useEffect(() => {
-
     fetchDash()
   }, [])
 

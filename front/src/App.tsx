@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { fetchData, addComic } from './services'
+import { fetchData, addComic, IComicData } from './services'
 import Form from './components/Form'
 import DataTable from './components/DataTable'
 import './App.scss'
@@ -48,9 +48,9 @@ function App() {
     }
   }
 
-  const newComicFlow = async () => {
+  const newComicFlow = async (comic: IComicData) => {
     try {
-      await addComic(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comics`)
+      await addComic(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comics`, comic)
     }
     catch (e) {
       console.log(e);

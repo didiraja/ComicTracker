@@ -1,8 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { DashboardData, ICategory } from '../App';
+import { IComicData } from '../services';
 import './Form.scss';
 
-const FormComponent = ({ data, submit }: { data: DashboardData, submit: () => void }) => {
+const FormComponent = ({ data, submit }: { data: DashboardData, submit: (comic: IComicData) => void }) => {
 
   return (
     <div className="form-wrapper">
@@ -26,10 +27,7 @@ const FormComponent = ({ data, submit }: { data: DashboardData, submit: () => vo
 
           return errors;
         }}
-        onSubmit={(values) => {
-          // console.log(values);
-          submit();
-        }}
+        onSubmit={(values) => submit(values)}
       >
         <Form id="form">
 

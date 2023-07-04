@@ -1,5 +1,12 @@
 import { DashboardData } from "./App";
-
+export interface IComicData {
+  illustrator: string;
+  issue: string;
+  publisher: string;
+  title: string;
+  writer: string;
+  year: string;
+}
 export async function fetchData(url: string): Promise<DashboardData> {
     const response = await fetch(url);
 
@@ -10,24 +17,17 @@ export async function fetchData(url: string): Promise<DashboardData> {
     return response.json();
 }
 
-export async function addComic(url: string) {
-    // const response = await fetch(url, {
-    //   method: "post",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     publisher_id: 1,
-    //     title: 'yayyyyyyy',
-    //     issue: Math.floor(Math.random() * 100),
-    //     year: Math.floor(Math.random() * 2023),
-    //     writer_id: 3,
-    //     illustrator_id: 2,
-    //   })
-    // });
+export async function addComic(url: string, comic: IComicData) {
+    const response = await fetch(url, {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(comic)
+    });
 
-    // if (!response.ok) {
-    //   throw new Error(`HTTP error! Status: ${response.status}`);
-    // }
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 }

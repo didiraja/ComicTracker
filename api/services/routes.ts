@@ -22,7 +22,6 @@ export const AddComic = (req: Request, res: Response) => {
   } catch {
     res.status(500).json({ error: 'Failed to complete operation' });
   } finally {
-
     res.status(200).send({
       msg: "Comic added sucessfully!",
     });
@@ -141,12 +140,12 @@ export const DeleteComic = (req: Request, res: Response) => {
           res.status(500).json({ error: 'Failed to delete comic' });
         } else if (this.changes === 0) {
           res.status(404).json({ error: 'Comic not found' });
-        } else {
-          res.status(200).json({ msg: 'Comic deleted successfully' });
         }
       }
     );
   } catch {
     res.status(500).json({ error: 'Failed to complete operation' });
+  } finally {
+    res.status(200).json({ msg: 'Comic deleted successfully' });
   }
 }

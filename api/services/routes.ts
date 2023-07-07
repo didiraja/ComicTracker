@@ -1,12 +1,12 @@
 import { Request, Response } from "express"
 import { db } from "./database";
-import { InterfaceComic, NameFromID } from "../types";
+import { InterfaceComic } from "../types";
 import { QUERIES }  from '../enum';
 
 // C
 export const AddComic = (req: Request, res: Response) => {
 
-  const { publisher_id, title, issue, year, writer_id, illustrator_id }: InterfaceComic = req.body;
+  const { publisher: publisher_id, title, issue, year, writer: writer_id, illustrator: illustrator_id }: InterfaceComic = req.body;
 
   try {
     db.run(QUERIES.NEW_COMIC,
@@ -109,7 +109,7 @@ export const GetDashboardData = (_: Request, res: Response) => {
 // U
 export const EditComic = (req: Request, res: Response) => {
 
-  const { id, publisher_id, title, issue, year, writer_id, illustrator_id }: InterfaceComic = req.body;
+  const { id, publisher: publisher_id, title, issue, year, writer: writer_id, illustrator: illustrator_id }: InterfaceComic = req.body;
 
   try {
     db.run(QUERIES.EDIT_COMIC,

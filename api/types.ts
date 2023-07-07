@@ -1,11 +1,11 @@
 export type InterfaceComic = {
   id: number;
-  publisher_id: number;
+  publisher: string;
   title: string;
-  issue: number;
-  year: number;
-  writer_id: number;
-  illustrator_id: number;
+  issue: string;
+  year: string;
+  writer: string;
+  illustrator: string;
 }
 
 export type CategoryTable = {

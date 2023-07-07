@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { fetchData, addComic, IComicData } from './services'
+import { fetchData, addComic, IComicData, removeComic } from './services'
 import Form from './components/Form'
 import DataTable from './components/DataTable'
 import './App.scss'
@@ -60,6 +60,18 @@ function App() {
     }
   }
 
+  const removeComicFlow = async (id: number) => {
+    try {
+      await removeComic(id)
+    }
+    catch (e) {
+      console.log(e);
+    }
+    finally {
+      fetchDash()
+    }
+  }
+
   useEffect(() => {
     fetchDash()
   }, [])
@@ -68,7 +80,7 @@ function App() {
     <>
       <h1 className="title-main">ComicTracker</h1>
       <Form data={dashData} submit={newComicFlow} />
-      <DataTable data={dashData.comics} />
+      <DataTable data={dashData.comics} remove={removeComicFlow} />
     </>
   )
 }

@@ -1,7 +1,10 @@
 import './DataTable.scss';
 import { IComic } from '../App';
 
-const DataTable = ({ data = [] }: { data: IComic[] }) => {
+const DataTable = (
+  { data = [], remove }: { data: IComic[], remove: (id: number) => void }
+) => {
+
   return (
     <div className="table-wrapper">
       <div className="table-overflow">
@@ -28,10 +31,15 @@ const DataTable = ({ data = [] }: { data: IComic[] }) => {
                     <td className="table-item">{item.year}</td>
                     <td className="table-item">{item.writer}</td>
                     <td className="table-item">{item.illustrator}</td>
-                    {/* <td className="table-item">
-                      <button type="button" className="btn edit-btn">Edit</button>
-                      <button type="button" className="btn delete-btn">Delete</button>
-                    </td> */}
+                    <td className="table-item">
+                      {/* <button type="button" className="btn edit-btn">Edit</button> */}
+                      <button
+                        type="button"
+                        className="btn delete-btn"
+                        onClick={() => remove(item.id)}>
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))
               }

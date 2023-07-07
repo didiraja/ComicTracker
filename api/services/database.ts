@@ -1,7 +1,9 @@
 import sqlite3 from 'sqlite3';
 import { QUERIES } from '../enum';
 
-export const db = new sqlite3.Database('./comictracker.db');
+export const db = new sqlite3.Database(
+  process.env.NODE_ENV ? './ctdb_prod.db' : './ctdb_dev.db'
+);
 
 export const StartingDB = () => {
   db.serialize(() => {

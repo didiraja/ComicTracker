@@ -51,13 +51,13 @@ const FormComponent = ({ data, submit }: { data: DashboardData, submit: (comic: 
 
             <div>
               <label className="label" htmlFor="issue">Issue</label>
-              <Field className="form-default" type="text" name="issue" placeholder="52" />
+              <Field className="form-default" type="text" name="issue" placeholder="52" maxlength="3" />
               <ErrorMessage name="issue" component="div" className="form-error" />
             </div>
 
             <div>
               <label className="label" htmlFor="year">Year</label>
-              <Field className="form-default" type="text" name="year" placeholder="2011" />
+              <Field className="form-default" type="text" name="year" placeholder="2011" maxlength="4" />
               <ErrorMessage name="year" component="div" className="form-error" />
             </div>
 

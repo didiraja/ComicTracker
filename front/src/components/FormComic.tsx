@@ -1,9 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { DashboardData, ICategory } from '../App';
 import { IComicData } from '../services';
-import './Form.scss';
+import './FormComic.scss';
 
-const FormComponent = ({ data, submit }: { data: DashboardData, submit: (comic: IComicData) => void }) => {
+const FormComic = ({ data, submit }: { data: DashboardData, submit: (comic: IComicData) => void }) => {
 
   return (
     <div className="form-wrapper">
@@ -51,13 +51,13 @@ const FormComponent = ({ data, submit }: { data: DashboardData, submit: (comic: 
 
             <div>
               <label className="label" htmlFor="issue">Issue</label>
-              <Field className="form-default" type="text" name="issue" placeholder="52" maxlength="3" />
+              <Field className="form-default" type="text" name="issue" placeholder="52" maxLength="3" />
               <ErrorMessage name="issue" component="div" className="form-error" />
             </div>
 
             <div>
               <label className="label" htmlFor="year">Year</label>
-              <Field className="form-default" type="text" name="year" placeholder="2011" maxlength="4" />
+              <Field className="form-default" type="text" name="year" placeholder="2011" maxLength="4" />
               <ErrorMessage name="year" component="div" className="form-error" />
             </div>
 
@@ -95,6 +95,4 @@ const FormComponent = ({ data, submit }: { data: DashboardData, submit: (comic: 
   );
 }
 
-
-
-export default FormComponent;
+export default FormComic;

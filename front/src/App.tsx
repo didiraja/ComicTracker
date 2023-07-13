@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { fetchData, addComic, IComicData, removeComic } from './services'
-import Form from './components/Form'
+import FormComic from './components/FormComic'
 import DataTable from './components/DataTable'
 import './App.scss'
 
@@ -27,6 +27,7 @@ export type DashboardData = {
 }
 
 function App() {
+
   const INITIAL_DASH = {
     comics: [],
     publishers: [],
@@ -34,14 +35,25 @@ function App() {
     illustrators: [],
   }
 
+  const [isLoading, setLoading] = useState(false);
+  const [errorLoading, setErrLoading] = useState(false);
+
   const [dashData, setDashData] = useState<DashboardData>(INITIAL_DASH);
 
   const fetchDash = async () => {
-    try {
-      const data = await fetchData(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/dashboard`);
 
+    setLoading(true);
+    
+    try {
+
+      const data = await fetchData(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/dashboard`);
+      
       setDashData(data);
+      setLoading(false);
     } catch (error) {
+
+      setErrLoading(true);
+      setLoading(false);
       console.error("Error:", error);
 
       return {}
@@ -79,8 +91,16 @@ function App() {
   return (
     <>
       <h1 className="title-main">ComicTracker</h1>
-      <Form data={dashData} submit={newComicFlow} />
-      <DataTable data={dashData.comics} remove={removeComicFlow} />
+      <FormComic
+        data={dashData}
+        submit={newComicFlow}
+      />
+      <DataTable
+        data={dashData.comics}
+        isLoading={isLoading}
+        errorLoading={errorLoading}
+        remove={removeComicFlow}
+      />
     </>
   )
 }

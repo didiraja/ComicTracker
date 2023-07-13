@@ -1,0 +1,27 @@
+.form-wrapper {
+  @apply max-w-[90%] mx-auto rounded-md py-5 px-8 mb-8;
+}
+
+.form-grid {
+  @apply grid grid-cols-3 gap-6 mb-5;
+}
+
+.label {
+  @apply block text-xs text-left mb-2;
+}
+
+.form-default {
+  @apply block w-full rounded-md bg-transparent border border-slate-300 shadow-sm p-2;
+
+  option {
+    @apply text-black;
+  }
+}
+
+.form-error {
+  @apply rounded-md border border-red-500 text-red-500 py-1 my-3;
+}
+
+.btn-submit {
+  @apply rounded mt-5 px-5 py-3 font-bold uppercase bg-purple-900 hover:bg-purple-800 active:bg-purple-950 border border-purple-500;
+}

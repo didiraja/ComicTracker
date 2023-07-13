@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fetchData, addComic, IComicData, removeComic } from './services'
-import FormComic from './components/FormComic'
+// import FormComic from './components/FormComic'
+import FormEntry from './components/FormEntry'
 import DataTable from './components/DataTable'
 import './App.scss'
 
@@ -72,6 +73,11 @@ function App() {
     }
   }
 
+  const newEntryFlow = async (entry: any) => {
+    
+    console.log(entry);
+  }
+
   const removeComicFlow = async (id: number) => {
     try {
       await removeComic(id)
@@ -91,9 +97,8 @@ function App() {
   return (
     <>
       <h1 className="title-main">ComicTracker</h1>
-      <FormComic
-        data={dashData}
-        submit={newComicFlow}
+      <FormEntry
+        submit={newEntryFlow}
       />
       <DataTable
         data={dashData.comics}

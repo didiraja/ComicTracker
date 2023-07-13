@@ -3,11 +3,15 @@
 }
 
 .form-grid {
-  @apply grid grid-cols-3 gap-6 mb-5;
+  @apply grid grid-cols-2 gap-6 mb-5;
 }
 
 .label {
   @apply block text-xs text-left mb-2;
+}
+
+.label-check {
+  @apply /* block  */ ml-3;
 }
 
 .form-default {
@@ -19,7 +23,7 @@
 }
 
 .form-error {
-  @apply rounded-md border border-red-500 text-red-500 py-1 my-3;
+  @apply rounded-md border border-red-500 text-red-500 py-1 px-2 my-3;
 }
 
 .btn-submit {

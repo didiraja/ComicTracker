@@ -1,93 +1,71 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { DashboardData, ICategory } from '../App';
-import { IComicData } from '../services';
-import './FormComic.scss';
+import './FormEntry.scss';
 
-const FormComic = ({ data, submit }: { data: DashboardData, submit: (comic: IComicData) => void }) => {
+export type IEntry = {
+  name: string;
+  writer: boolean;
+  illustrator: boolean;
+}
+
+const FormEntry = ({ submit }: { submit: (entry: IEntry) => void }) => {
 
   return (
     <div className="form-wrapper">
       <Formik
         initialValues={{
-          publisher: '',
-          title: '',
-          issue: '',
-          year: '',
-          writer: '',
-          illustrator: ''
+          name: '',
+          writer: false,
+          illustrator: false,
         }}
         validate={values => {
-          const errors: Partial<Record<keyof typeof values, string>> = {};
 
-          Object.keys(values).forEach(key => {
-            if (!values[key as keyof typeof values]) {
-              errors[key as keyof typeof values] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required`;
-            }
-          });
+          const errors: any = {};
+
+          if (!values['name']) {
+            errors.name = "Entry name is required";
+          }
+
+          if (!values['writer'] && !values['illustrator']) {
+            errors.writer = "Writer or Illustrator is required"
+          }
 
           return errors;
         }}
-        onSubmit={(values) => submit(values)}
+        onSubmit={(values, { resetForm }) => {
+
+          submit(values);
+
+          resetForm();
+        }}
       >
         <Form id="form">
-
           <div className='form-grid'>
             <div>
-              <label className="label" htmlFor="publisher">Publisher</label>
-              <Field className="form-default" name="publisher" as="select">
-                <option value="">{' '}</option>
-                {data.publishers?.map((pub: ICategory) => (
-                  <option key={pub.id} value={pub.id}>{pub.name}</option>
-                ))}
-              </Field>
-              <ErrorMessage name="publisher" component="div" className="form-error" />
+              <label className="label" htmlFor="title">Name</label>
+              <Field className="form-default" type="text" name="name"
+                placeholder="Takehiko Inoue" />
             </div>
 
-            <div>
-              <label className="label" htmlFor="title">Title</label>
-              <Field className="form-default" type="text" name="title" placeholder="Justice League" />
-              <ErrorMessage name="title" component="div" className="form-error" />
-            </div>
+            <div className="option-wrapper flex justify-evenly items-center">
+              <div className="entry">
+                <Field type="checkbox" name="writer" label="Writer" />
+                <label className="label-check" htmlFor="writer">Writer</label>
+              </div>
 
-            <div>
-              <label className="label" htmlFor="issue">Issue</label>
-              <Field className="form-default" type="text" name="issue" placeholder="52" maxLength="3" />
-              <ErrorMessage name="issue" component="div" className="form-error" />
-            </div>
-
-            <div>
-              <label className="label" htmlFor="year">Year</label>
-              <Field className="form-default" type="text" name="year" placeholder="2011" maxLength="4" />
-              <ErrorMessage name="year" component="div" className="form-error" />
-            </div>
-
-            <div>
-              <label className="label" htmlFor="writer">Writer</label>
-              <Field className="form-default" name="writer" as="select">
-                <option value="">{' '}</option>
-                {data.writers?.map((writer: ICategory) => (
-                  <option key={writer.id} value={writer.id}>{writer.name}</option>
-                ))}
-              </Field>
-              <ErrorMessage name="writer" component="div" className="form-error" />
-            </div>
-
-            <div>
-              <label className="label" htmlFor="illustrator">Illustrator</label>
-              <Field className="form-default" name="illustrator" as="select">
-                <option value="">{' '}</option>
-                {data.illustrators?.map((illustrator: ICategory) => (
-                  <option key={illustrator.id} value={illustrator.id}>{illustrator.name}</option>
-                ))}
-              </Field>
-              <ErrorMessage name="illustrator" component="div" className="form-error" />
+              <div className="entry">
+                <Field type="checkbox" name="illustrator" label="Illustrator" />
+                <label className="label-check" htmlFor="illustrator">Illustrator</label>
+              </div>
             </div>
           </div>
+          
+          <ErrorMessage name="name" component="div" className="form-error" />
+          <ErrorMessage name="writer" component="div" className="form-error" />
 
           <button
             type="submit"
             className='btn-submit'>
-            Add New Comic
+            Add New Entry
           </button>
         </Form>
       </Formik>
@@ -95,4 +73,4 @@ const FormComic = ({ data, submit }: { data: DashboardData, submit: (comic: ICom
   );
 }
 
-export default FormComic;
+export default FormEntry;

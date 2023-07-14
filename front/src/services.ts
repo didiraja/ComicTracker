@@ -1,4 +1,5 @@
 import { DashboardData } from "./App";
+import { IEntruo } from "./components/FormEntry";
 export interface IComicData {
   illustrator: string;
   issue: string;
@@ -32,7 +33,22 @@ export async function addComic(url: string, comic: IComicData) {
     }
 }
 
-export async function removeComic(id: number) {
+export async function addEntry(url: string, entry: IEntruo) {
+    const response = await fetch(url, {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(entry)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+}
+
+export async function removeComic(id: string) {
 
     if (!id) {
       throw new Error(`COMICTRACKER: ID needs to be a number`);

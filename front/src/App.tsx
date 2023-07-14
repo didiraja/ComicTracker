@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { fetchData, addComic, type IComicData, removeComic } from './services'
+import { fetchData, addComic, addEntry, removeComic, type IComicData } from './services'
 import FormEntry from './components/FormEntry'
 import DataTable from './components/DataTable'
 import './App.scss'
@@ -12,7 +12,7 @@ export interface IComic {
   year: string
   writer: string
   illustrator: string
-  [key: string]: any;
+  [key: string]: string;
 }
 
 export interface ICategory {
@@ -66,10 +66,16 @@ function App(): JSX.Element {
   }
 
   const newEntryFlow = async (entry: any): Promise<void> => {
-    console.log(entry)
+    try {
+      await addComic(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/entry`, entry)
+    } catch (e) {
+      console.log(e)
+    } finally {
+      await fetchDash()
+    }
   }
 
-  const removeComicFlow = async (id: number): Promise<void> => {
+  const removeComicFlow = async (id: string): Promise<void> => {
     try {
       await removeComic(id)
     } catch (e) {
@@ -97,12 +103,26 @@ function App(): JSX.Element {
         remove={removeComicFlow}
       />
 
-      <DataTable
-        data={dashData.publishers}
-        isLoading={isLoading}
-        errorLoading={errorLoading}
-        remove={removeComicFlow}
-      />
+      <div className="grid grid-cols-3 gap-5">
+        <DataTable
+          data={dashData.publishers}
+          isLoading={isLoading}
+          errorLoading={errorLoading}
+          remove={removeComicFlow}
+        />
+        <DataTable
+          data={dashData.writers}
+          isLoading={isLoading}
+          errorLoading={errorLoading}
+          remove={removeComicFlow}
+        />
+        <DataTable
+          data={dashData.illustrators}
+          isLoading={isLoading}
+          errorLoading={errorLoading}
+          remove={removeComicFlow}
+        />
+      </div>
 
     </>
   )

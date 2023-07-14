@@ -6,7 +6,7 @@ export type ComicsOrEntries = IComic[] | ICategory[]
 
 const DataTable = (
   { data = [], isLoading, errorLoading, remove }:
-    { data: ComicsOrEntries, isLoading: boolean, errorLoading: boolean, remove: (id: number) => void }
+    { data: ComicsOrEntries, isLoading: boolean, errorLoading: boolean, remove: (id: string) => void }
 ) => {
 
   if (errorLoading) {
@@ -64,20 +64,11 @@ const DataTable = (
               {
                 data?.map((item: ComicOrEntry) => (
                   <tr key={item.id}>
-                    {('title' in item) ? (
-                      <>
-                        {
-
-                          Object.keys(item).map((entry: keyof typeof item) => (
-                            <td className="table-item">{item[entry]}</td>
-                          ))
-                        }
-                      </>
-                    ) : (
-                      <>
-                        <td className="table-item">{item.name}</td>
-                      </>
-                    )}
+                    {
+                      (Object.keys(item) as Array<keyof typeof item>).map((entry: keyof typeof item) => (
+                        <td className="table-item" key={entry}>{item[entry]}</td>
+                      ))
+                    }
 
                     {/* <td className="table-item">
                       <button type="button" className="btn edit-btn">Edit</button>

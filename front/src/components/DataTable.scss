@@ -1,5 +1,5 @@
 .table-is-loading {
-  @apply bg-gray-700 rounded-md flex justify-center items-center py-5 w-5/6 mx-auto;
+  @apply bg-gray-700 rounded-md flex justify-center items-center py-5 w-5/6 mx-auto mb-5;
 
   .loading-title {
     @apply ml-2 font-semibold text-lg;
@@ -7,7 +7,7 @@
 }
 
 .error-loading {
-  @apply bg-red-900 rounded-md flex justify-center items-center py-5 w-5/6 mx-auto;
+  @apply bg-red-900 rounded-md flex justify-center items-center py-5 w-5/6 mx-auto mb-5;
 
   .error-title {
     @apply ml-2 font-semibold;
@@ -15,7 +15,7 @@
 }
 
 .table-wrapper {
-  @apply bg-indigo-950 rounded-sm overflow-hidden border border-indigo-700;
+  @apply bg-indigo-950 rounded-sm overflow-hidden border border-indigo-700 mb-5;
 }
 
 .table-overflow {

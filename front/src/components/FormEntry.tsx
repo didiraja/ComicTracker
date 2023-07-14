@@ -2,14 +2,14 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import './FormEntry.scss'
 import { useState } from 'react'
 
-export interface IEntry {
+export interface IEntruo {
   name: string
   publisher: string
   writer: boolean
   illustrator: boolean
 }
 
-const FormEntry = ({ submit }: { submit: (entry: IEntry) => void }): JSX.Element => {
+const FormEntry = ({ submit }: { submit: (entry: IEntruo) => void }): JSX.Element => {
   const labels = ['Writer/Illustrator', 'Publisher']
   const [navActive, setActive] = useState(labels[0])
 

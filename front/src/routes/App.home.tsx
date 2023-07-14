@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react'
-import { fetchData, addComic, type IComicData, removeComic } from './services'
-import FormEntry from './components/FormEntry'
-import DataTable from './components/DataTable'
+import { fetchData, addComic, type IComicData, removeComic } from '../services'
+// import FormComic from './components/FormComic'
+import FormEntry from '../components/FormEntry'
+import DataTable from '../components/DataTable'
 import './App.scss'
 
 export interface IComic {
-  id: string
+  id: number
   publisher: string
   title: string
-  issue: string
-  year: string
+  issue: number
+  year: number
   writer: string
   illustrator: string
-  [key: string]: any;
 }
 
 export interface ICategory {
-  id: string
+  id: number
   name: string
 }
 
@@ -89,21 +89,12 @@ function App(): JSX.Element {
       <FormEntry
         submit={newEntryFlow}
       />
-
       <DataTable
         data={dashData.comics}
         isLoading={isLoading}
         errorLoading={errorLoading}
         remove={removeComicFlow}
       />
-
-      <DataTable
-        data={dashData.publishers}
-        isLoading={isLoading}
-        errorLoading={errorLoading}
-        remove={removeComicFlow}
-      />
-
     </>
   )
 }

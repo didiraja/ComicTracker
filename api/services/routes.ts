@@ -28,8 +28,59 @@ export const AddComic = (req: Request, res: Response) => {
   }
 }
 
+export const AddEntry = (req: Request, res: Response) => {
+
+  /**
+   * MOCK
+   * 
+   * WRITE
+    { name: "asdasdas", publisher: "", writer: true, illustrator: false }
+   * ILLUSTRATOR
+    { name: "asdasdas", publisher: "", writer: false, illustrator: true }
+   * WRITER/ILLUSTRATOR
+    { name: "sadsadsad", publisher: "", writer: true, illustrator: true }
+   * PUBLISHER
+    { name: "", publisher: "sdasdsadsadsa", writer: false, illustrator: false }
+    */
+   
+   const { publisher /* , name, writer, illustrator */ }: InterfaceComic = req.body;
+   
+   function capitalizeFirstCharacter(str: string) {
+     return str.split(' ')
+       .map(block => block.charAt(0).toUpperCase() + block.slice(1))
+       .join(' ');
+   }
+
+  if (publisher) {
+    const sanitized = capitalizeFirstCharacter(publisher); 
+  
+    try {
+      db.run(QUERIES.NEW_PUBLISHER,
+        [sanitized],
+        function (err) {
+    
+          if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to create entry' });
+          }
+        }
+      );
+    } catch {
+      res.status(500).json({ error: 'Failed to complete operation' });
+    } finally {
+      res.status(200).send({
+        msg: "Entry created sucessfully!",
+      });
+    }
+  }
+
+
+
+
+}
+
 // R
-export const GetDashboardData = (_: Request, res: Response) => {
+export const GetDashData = (_: Request, res: Response) => {
 
   async function getEachKey() {
 

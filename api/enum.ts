@@ -31,8 +31,8 @@ export const QUERIES = {
     name VARCHAR(255) NOT NULL UNIQUE
   )
 `,
-  NEW_COMIC: `INSERT INTO comics (publisher_id, title, issue, year, writer_id, illustrator_id)
-  VALUES (?, ?, ?, ?, ?, ?)`,
+  NEW_COMIC: `INSERT INTO comics (publisher_id, title, issue, year, writer_id, illustrator_id) VALUES (?, ?, ?, ?, ?, ?)`,
+  NEW_PUBLISHER: `INSERT INTO publishers (name) VALUES (?)`,
   // R
   GET_PUBLISHERS: 'SELECT * from publishers',
   GET_WRITERS: 'SELECT * from writers',

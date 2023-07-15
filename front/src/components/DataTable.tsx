@@ -1,12 +1,12 @@
+import { IComic, ICategory } from '../routes/Home';
 import './DataTable.scss';
-import { IComic, ICategory } from '../App';
 
 export type ComicOrEntry = IComic | ICategory
 export type ComicsOrEntries = IComic[] | ICategory[]
 
 const DataTable = (
-  { data = [], isLoading, errorLoading/* , remove */ }:
-    { data: ComicsOrEntries, isLoading: boolean, errorLoading: boolean, remove: (id: string) => void }
+  { data = [], isLoading, errorLoading, remove }:
+    { data: ComicsOrEntries, isLoading: boolean, errorLoading: boolean, remove?: (id: string) => void }
 ) => {
 
   if (errorLoading) {
@@ -70,15 +70,19 @@ const DataTable = (
                       ))
                     }
 
-                    {/* <td className="table-item">
-                      <button type="button" className="btn edit-btn">Edit</button>
-                      <button
-                        type="button"
-                        className="btn delete-btn"
-                        onClick={() => remove(item.id)}>
-                        Delete
-                      </button>
-                    </td> */}
+                    {
+                      remove ?
+                        <td className="table-item">
+                          <button type="button" className="btn edit-btn">Edit</button>
+                          <button
+                            type="button"
+                            className="btn delete-btn"
+                            onClick={() => remove(item.id)}>
+                            Delete
+                          </button>
+                        </td>
+                        : null
+                    }
                   </tr>
                 ))
               }

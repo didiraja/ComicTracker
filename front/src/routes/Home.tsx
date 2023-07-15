@@ -1,24 +1,23 @@
 // @ts-nocheck
 
 import { useEffect, useState } from 'react'
-import { fetchData, addComic, type IComicData, removeComic } from '../services'
-// import FormComic from './components/FormComic'
-import FormEntry from '../components/FormEntry'
+import { fetchData, addEntry, removeComic } from '../services'
+import FormComic from '../components/FormComic'
 import DataTable from '../components/DataTable'
-import './App.scss'
 
 export interface IComic {
-  id: number
+  id: string
   publisher: string
   title: string
-  issue: number
-  year: number
+  issue: string
+  year: string
   writer: string
   illustrator: string
+  [key: string]: string
 }
 
 export interface ICategory {
-  id: number
+  id: string
   name: string
 }
 
@@ -29,7 +28,7 @@ export interface DashboardData {
   illustrators: ICategory[]
 }
 
-function App(): JSX.Element {
+function Home(): JSX.Element {
   const INITIAL_DASH = {
     comics: [],
     publishers: [],
@@ -59,7 +58,7 @@ function App(): JSX.Element {
 
   const newComicFlow = async (comic: IComicData): Promise<void> => {
     try {
-      await addComic(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comics`, comic)
+      await addEntry(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comics`, comic)
     } catch (e) {
       console.log(e)
     } finally {
@@ -67,11 +66,7 @@ function App(): JSX.Element {
     }
   }
 
-  const newEntryFlow = async (entry: any): Promise<void> => {
-    console.log(entry)
-  }
-
-  const removeComicFlow = async (id: number): Promise<void> => {
+  const removeComicFlow = async (id: string): Promise<void> => {
     try {
       await removeComic(id)
     } catch (e) {
@@ -87,10 +82,11 @@ function App(): JSX.Element {
 
   return (
     <>
-      <h1 className="title-main">ComicTracker</h1>
-      <FormEntry
-        submit={newEntryFlow}
+      <FormComic
+        data={dashData}
+        submit={newComicFlow}
       />
+
       <DataTable
         data={dashData.comics}
         isLoading={isLoading}
@@ -101,4 +97,4 @@ function App(): JSX.Element {
   )
 }
 
-export default App
+export default Home

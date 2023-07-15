@@ -1,8 +1,19 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+}
+
+.navbar {
+  @apply w-full border-b border-zinc-900 mb-8 px-5 py-3 flex justify-end gap-3;
+
+  .nav {
+    @apply font-semibold text-blue-300 underline;
+
+    &.active {
+      @apply no-underline text-zinc-600 cursor-default;
+    }
+  }
 }
 
 .title {

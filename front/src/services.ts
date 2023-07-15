@@ -1,62 +1,48 @@
-import { DashboardData } from "./App";
-import { IEntruo } from "./components/FormEntry";
+import { type DashboardData } from './App'
+import { type IEntruo } from './components/FormEntry'
 export interface IComicData {
-  illustrator: string;
-  issue: string;
-  publisher: string;
-  title: string;
-  writer: string;
-  year: string;
+  illustrator: string
+  issue: string
+  publisher: string
+  title: string
+  writer: string
+  year: string
 }
-export async function fetchData(url: string): Promise<DashboardData> {
-    const response = await fetch(url);
+export async function fetchData (url: string): Promise<DashboardData> {
+  const response = await fetch(url)
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`)
+  }
 
-    return response.json();
-}
-
-export async function addComic(url: string, comic: IComicData) {
-    const response = await fetch(url, {
-      method: "post",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(comic)
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+  return await response.json()
 }
 
-export async function addEntry(url: string, entry: IEntruo) {
-    const response = await fetch(url, {
-      method: "post",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(entry)
-    });
+export async function addEntry (url: string, entry: IComicData | IEntruo): Promise<void> {
+  const response = await fetch(url, {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(entry)
+  })
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`)
+  }
 }
 
-export async function removeComic(id: string) {
+export async function removeComic (id: string): Promise<void> {
+  const idAsNumber: number | typeof NaN = Number(id)
 
-    if (!id) {
-      throw new Error(`COMICTRACKER: ID needs to be a number`);
-    }
+  if (idAsNumber === 0 || Number.isNaN(idAsNumber)) {
+    throw new Error('COMICTRACKER: ID needs to be a number')
+  }
 
-    const response = await fetch(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comic/${id}`);
+  const response = await fetch(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comic/${id}`)
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`)
+  }
 }

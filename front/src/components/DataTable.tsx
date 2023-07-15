@@ -5,7 +5,7 @@ export type ComicOrEntry = IComic | ICategory
 export type ComicsOrEntries = IComic[] | ICategory[]
 
 const DataTable = (
-  { data = [], isLoading, errorLoading, remove }:
+  { data = [], isLoading, errorLoading/* , remove */ }:
     { data: ComicsOrEntries, isLoading: boolean, errorLoading: boolean, remove: (id: string) => void }
 ) => {
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { fetchData, addComic, addEntry, removeComic, type IComicData } from './services'
+import { fetchData, addEntry, removeComic/* , type IComicData */ } from './services'
 import FormEntry from './components/FormEntry'
 import DataTable from './components/DataTable'
 import './App.scss'
@@ -12,7 +12,7 @@ export interface IComic {
   year: string
   writer: string
   illustrator: string
-  [key: string]: string;
+  [key: string]: string
 }
 
 export interface ICategory {
@@ -55,19 +55,19 @@ function App(): JSX.Element {
     }
   }
 
-  const newComicFlow = async (comic: IComicData): Promise<void> => {
-    try {
-      await addComic(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comics`, comic)
-    } catch (e) {
-      console.log(e)
-    } finally {
-      await fetchDash()
-    }
-  }
+  // const newComicFlow = async (comic: IComicData): Promise<void> => {
+  //   try {
+  //     await addEntry(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/comics`, comic)
+  //   } catch (e) {
+  //     console.log(e)
+  //   } finally {
+  //     await fetchDash()
+  //   }
+  // }
 
   const newEntryFlow = async (entry: any): Promise<void> => {
     try {
-      await addComic(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/entry`, entry)
+      await addEntry(`${import.meta.env.DEV ? 'http://localhost:5200' : 'https://comictracker.onrender.com'}/entry`, entry)
     } catch (e) {
       console.log(e)
     } finally {

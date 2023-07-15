@@ -10,7 +10,7 @@ export interface IEntryRequest {
 }
 
 const FormEntry = ({ submit }: { submit: (entry: IEntryRequest) => void }): JSX.Element => {
-  const labels = ['Writer/Illustrator', 'Publisher']
+  const labels = ['Publisher', 'Writer/Illustrator']
   const [navActive, setActive] = useState(labels[0])
 
   const NavBar = ({ reset }: { reset: () => void }): JSX.Element => {
@@ -44,7 +44,7 @@ const FormEntry = ({ submit }: { submit: (entry: IEntryRequest) => void }): JSX.
           validate={values => {
             const errors: any = {}
 
-            if (navActive === labels[0]) {
+            if (navActive === 'Writer/Illustrator') {
               // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
               if (!values.name) {
                 errors.name = 'Entry name is required'
@@ -55,7 +55,7 @@ const FormEntry = ({ submit }: { submit: (entry: IEntryRequest) => void }): JSX.
               }
             }
 
-            if (navActive === labels[1]) {
+            if (navActive === 'Publisher') {
               // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
               if (!values.publisher) {
                 errors.publisher = 'Publisher name is required'
@@ -78,7 +78,7 @@ const FormEntry = ({ submit }: { submit: (entry: IEntryRequest) => void }): JSX.
                   <div className='form-grid'>
 
                     {
-                      (navActive === labels[0])
+                      (navActive === 'Writer/Illustrator')
                         ? <>
                           <div>
                             <label className="label" htmlFor="name">Name</label>
@@ -103,7 +103,7 @@ const FormEntry = ({ submit }: { submit: (entry: IEntryRequest) => void }): JSX.
                     }
 
                     {
-                      (navActive === labels[1])
+                      (navActive === 'Publisher')
                         ? <>
                           <div>
                             <label className="label" htmlFor="publisher">Publisher</label>

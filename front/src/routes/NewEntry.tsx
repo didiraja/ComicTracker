@@ -58,7 +58,6 @@ function NewEntry(): JSX.Element {
 
   return (
     <>
-      <h1 className="title-main">ComicTracker</h1>
       <FormEntry
         submit={newEntryFlow}
       />

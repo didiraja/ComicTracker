@@ -1,7 +1,5 @@
-// @ts-nocheck
-
 import { useEffect, useState } from 'react'
-import { fetchData, addEntry, removeComic } from '../services'
+import { fetchData, addEntry, removeComic, IComicData } from '../services'
 import FormComic from '../components/FormComic'
 import DataTable from '../components/DataTable'
 

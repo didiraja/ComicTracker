@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { DashboardData, ICategory } from '../App';
+import { DashboardData, ICategory } from '../routes/Home';
 import { IComicData } from '../services';
 import './FormComic.scss';
 

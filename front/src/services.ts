@@ -1,4 +1,4 @@
-import { type DashboardData } from './App'
+import { type DashboardData } from './routes/Home'
 import { type IEntryRequest } from './components/FormEntry'
 export interface IComicData {
   illustrator: string

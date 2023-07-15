@@ -1,5 +1,5 @@
 import { type DashboardData } from './App'
-import { type IEntruo } from './components/FormEntry'
+import { type IEntryRequest } from './components/FormEntry'
 export interface IComicData {
   illustrator: string
   issue: string
@@ -18,7 +18,7 @@ export async function fetchData (url: string): Promise<DashboardData> {
   return await response.json()
 }
 
-export async function addEntry (url: string, entry: IComicData | IEntruo): Promise<void> {
+export async function addEntry (url: string, entry: IComicData | IEntryRequest): Promise<void> {
   const response = await fetch(url, {
     method: 'post',
     headers: {

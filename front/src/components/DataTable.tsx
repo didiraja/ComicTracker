@@ -64,7 +64,8 @@ const DataTable = (
                   <tr key={item.id}>
                     {
                       (Object.keys(item) as Array<keyof typeof item>).map((entry: keyof typeof item) => (
-                        <td className="table-item" key={entry}>{item[entry]}</td>
+                        <td className="table-item" key={entry}>
+                          {item[entry]}</td>
                       ))
                     }
 
@@ -72,7 +73,7 @@ const DataTable = (
                       remove ?
                         <td className="table-item">
                           {/* <button type="button" className="btn edit-btn">
-                            <Edit />
+                            <Edity />
                           </button> */}
                           <button
                             type="button"

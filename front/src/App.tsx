@@ -3,7 +3,6 @@ import Home from './routes/Home';
 import NewEntry from './routes/NewEntry';
 import NoMatch from './routes/NoMatch';
 import './App.scss'
-import { ReactElement } from 'react';
 
 function App(): JSX.Element {
 

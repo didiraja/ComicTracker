@@ -1,6 +1,7 @@
 export type InterfaceComic = {
   id: number;
-  publisher: string;
+  name: string | undefined;
+  publisher: string | undefined;
   title: string;
   issue: string;
   year: string;

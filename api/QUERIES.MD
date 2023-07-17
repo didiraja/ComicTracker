@@ -3,6 +3,14 @@
 ```sql
   CREATE TABLE new_table AS SELECT * FROM original_table;
 ```
+
+# CLONE ROWS
+
+```sql
+  INSERT INTO target_table (column1, column2, column3)
+SELECT column1, column2, column3
+FROM source_table;
+```
 # RENAME TABLE
 
 ```sql

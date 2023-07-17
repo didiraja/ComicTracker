@@ -43,18 +43,24 @@ export const AddEntry = (req: Request, res: Response) => {
     { name: "", publisher: "sdasdsadsadsa", writer: false, illustrator: false }
     */
    
-   const { publisher /* , name, writer, illustrator */ }: InterfaceComic = req.body;
+   const { publisher, name, writer, illustrator }: Partial<InterfaceComic> = req.body;
    
-   function capitalizeFirstCharacter(str: string) {
-     return str.split(' ')
-       .map(block => block.charAt(0).toUpperCase() + block.slice(1))
-       .join(' ');
+   function capitalizeFirstCharacter(str: string | undefined) {
+
+    if (str) {
+      return str.split(' ')
+        .map(block => block.charAt(0).toUpperCase() + block.slice(1))
+        .join(' ');
+    }
+
+    return '';
    }
 
-  if (publisher) {
-    const sanitized = capitalizeFirstCharacter(publisher); 
-  
-    try {
+  try {
+
+    if (publisher) {
+      const sanitized = capitalizeFirstCharacter(publisher); 
+
       db.run(QUERIES.NEW_PUBLISHER,
         [sanitized],
         function (err) {
@@ -65,17 +71,67 @@ export const AddEntry = (req: Request, res: Response) => {
           }
         }
       );
-    } catch {
-      res.status(500).json({ error: 'Failed to complete operation' });
-    } finally {
-      res.status(200).send({
-        msg: "Entry created sucessfully!",
-      });
+
+      return;
     }
+
+    if (name) {
+      const sanitized = capitalizeFirstCharacter(name); 
+
+      const newWriter = () => {
+        db.run(QUERIES.NEW_WRITER,
+          [sanitized],
+          function (err) {
+      
+            if (err) {
+              console.error(err);
+              res.status(500).json({ error: 'Failed to create entry' });
+            }
+          }
+        );
+      }
+
+      const newIllustrator = () => {
+        db.run(QUERIES.NEW_ILLUSTRATOR,
+          [sanitized],
+          function (err) {
+      
+            if (err) {
+              console.error(err);
+              res.status(500).json({ error: 'Failed to create entry' });
+            }
+          }
+        );
+      }
+
+      if (writer && illustrator) {
+        
+        newWriter();
+        newIllustrator();
+        return;
+      }
+
+      if (writer) {
+
+        newWriter();
+        return;
+      }
+
+      if (illustrator) {
+
+        newIllustrator();
+        return;
+      }
+
+    }
+
+  } catch {
+    res.status(500).json({ error: 'Failed to complete operation' });
+  } finally {
+    res.status(200).send({
+      msg: "Entry created sucessfully!",
+    });
   }
-
-
-
 
 }
 

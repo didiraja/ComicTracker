@@ -3,6 +3,7 @@ import { fetchData, addEntry } from '../services'
 import FormEntry from '../components/FormEntry'
 import DataTable from '../components/DataTable'
 import { DashboardData } from './Home'
+import './NewEntry.scss';
 
 function NewEntry(): JSX.Element {
   const INITIAL_DASH = {
@@ -63,21 +64,32 @@ function NewEntry(): JSX.Element {
       />
 
       <div className="grid grid-cols-3 gap-5">
-        <DataTable
-          data={dashData.publishers}
-          isLoading={isLoading}
-          errorLoading={errorLoading}
-        />
-        <DataTable
-          data={dashData.writers}
-          isLoading={isLoading}
-          errorLoading={errorLoading}
-        />
-        <DataTable
-          data={dashData.illustrators}
-          isLoading={isLoading}
-          errorLoading={errorLoading}
-        />
+
+        <div>
+          <p className='entry-title'>Publishers</p>
+          <DataTable
+            data={dashData.publishers}
+            isLoading={isLoading}
+            errorLoading={errorLoading}
+          />
+        </div>
+        <div>
+          <p className='entry-title'>Writers</p>
+          <DataTable
+            data={dashData.writers}
+            isLoading={isLoading}
+            errorLoading={errorLoading}
+          />
+        </div>
+        <div>
+          <p className='entry-title'>Illustrators</p>
+          <DataTable
+            data={dashData.illustrators}
+            isLoading={isLoading}
+            errorLoading={errorLoading}
+          />
+        </div>
+
       </div>
 
     </>

@@ -5,3 +5,6 @@
 
 # Front
 **/.vite/
+
+# Api
+**/ctdb_prod.db

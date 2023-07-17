@@ -3,6 +3,7 @@
 ### *"It creates, it reads, updates and deletes data??? OMG, its a complete CRUD!!!"*
 
 ### Api
+  - Hosted on [Render.com](https://render.com/)
   - Node
   - Express
   - Typescript
@@ -15,6 +16,8 @@
   - React
   - Typescript
   - Sass
+  - Tailwind
+  - Heroicons
 
 # Demo
 - [Click here](https://comic-tracker.vercel.app/)

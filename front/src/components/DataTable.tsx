@@ -1,7 +1,7 @@
 import { IComic, ICategory } from '../routes/Home';
 import Close from './icon/Close';
 import Load from './icon/Load';
-import Edit from './icon/Edit';
+// import Edit from './icon/Edit';
 import Delete from './icon/Delete';
 import './DataTable.scss';
 

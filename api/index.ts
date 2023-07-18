@@ -25,6 +25,7 @@ app.listen(port, () => console.log(`Server running on port ${port}`));
 // /**
 //  * GET
 //  */
+app.get("/", GetDashData);
 // app.get("/", (_, res) => res.status(200).send('<h1>Server up and running</h1>'));
 
 // app.get('/dashboard', GetDashData);

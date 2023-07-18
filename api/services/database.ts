@@ -1,21 +1,14 @@
 import { QUERIES } from '../enum';
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+export const prisma = new PrismaClient()
 
 // export const db = new sqlite3.Database(
 //   process.env.NODE_ENV ? './ctdb_prod.db' : './ctdb_dev.db'
 // );
 
-const allComics = async () => {
-
-  console.log(await prisma.comics.findMany())
-}
-
 // TODO: create basic tables on Prisma
 export const StartingDB = () => {
-
-  allComics();
 
   //   db.serialize(() => {
 
@@ -38,3 +31,34 @@ export const StartingDB = () => {
   //     insertPublisher.finalize();
   //   });
 }
+
+export const allComics = async () => await prisma.comics.findMany({
+  select: {
+    id: true,
+    title: true,
+    issue: true,
+    year: true,
+    publishers: {
+      select: {
+        name: true
+      }
+    },
+    writers: {
+      select: {
+        name: true
+      }
+    },
+    illustrators: {
+      select: {
+        name: true
+      }
+    }
+  }
+});
+
+export const allPublishers = async () => await prisma.publishers.findMany();
+
+export const allWriters = async () => await prisma.writers.findMany();
+
+export const allIllustrators = async () => await prisma.illustrators.findMany();
+

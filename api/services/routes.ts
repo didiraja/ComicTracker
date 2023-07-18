@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { InterfaceComic } from "../types";
 import { QUERIES } from '../enum';
+import { allComics, prisma } from "./database";
 
 // C
 export const AddComic = (req: Request, res: Response) => {
@@ -124,78 +125,65 @@ export const AddEntry = (req: Request, res: Response) => {
 // R
 export const GetDashData = (_: Request, res: Response) => {
 
-  // async function getEachKey() {
+  async function fetchAllTables() {
+    try {
+      const [comics, publishers, writers, illustrators] = await Promise.all([
+        prisma.comics.findMany({
+          select: {
+            id: true,
+            title: true,
+            issue: true,
+            year: true,
+            publishers: {
+              select: {
+                name: true
+              }
+            },
+            writers: {
+              select: {
+                name: true
+              }
+            },
+            illustrators: {
+              select: {
+                name: true
+              }
+            }
+          }
+        }),
+        prisma.publishers.findMany(),
+        prisma.writers.findMany(),
+        prisma.illustrators.findMany()
+      ]);
 
-  //   try {
-  //     const publishers = await new Promise((resolve, reject) => {
-  //       db.all(QUERIES.GET_PUBLISHERS, (err, rows) => {
-  //         if (err) {
-  //           console.error(err);
-  //           reject({
-  //             msg: "Something went wrong. Couldn't found publishers."
-  //           });
-  //         } 
+      const response = {
+        comics,
+        publishers,
+        writers,
+        illustrators
+      };
 
-  //         resolve(rows)
-  //       });
-  //     });
+      return response;
+    } catch (error) {
+      console.error('An error occurred while fetching data:', error);
+      throw error;
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
 
-  //     const writers = await new Promise((resolve, reject) => {
-  //       db.all(QUERIES.GET_WRITERS, (err, rows) => {
-  //         if (err) {
-  //           console.error(err);
-  //           reject({
-  //             msg: "Something went wrong. Couldn't found writers."
-  //           });
-  //         } 
+  fetchAllTables()
+    .then(response => {
+      // console.log(response);
 
-  //         resolve(rows)
-  //       });
-  //     });
-
-  //     const illustrators = await new Promise((resolve, reject) => {
-  //       db.all(QUERIES.GET_ILLUSTRATORS, (err, rows) => {
-  //         if (err) {
-  //           console.error(err);
-  //           reject({
-  //             msg: "Something went wrong. Couldn't found illustrators."
-  //           });
-  //         } 
-
-  //         resolve(rows)
-  //       });
-  //     });
-
-  //     const comics = await new Promise((resolve, reject) => {
-  //       db.all(QUERIES.GET_COMICS, (err, rows) => {
-  //         if (err) {
-  //           console.error(err);
-  //           reject({
-  //             msg: "Something went wrong. Couldn't found comics."
-  //           });
-  //         } 
-
-  //         resolve(rows)
-  //       });
-  //     });
-
-  //     const output = {
-  //       publishers,
-  //       writers,
-  //       illustrators,
-  //       comics,
-  //     };
-
-  //     return res.status(200).send(output);
-  //   }
-  //   catch(e) {
-  //     console.log(e);
-
-  //     return res.status(500).json({ error: 'Failed to complete operation' });
-  //   }
-  // };
-
-  // return getEachKey();
+      res.status(200).json(response);
+    })
+    .catch(error => {
+      console.error('An error occurred:', error);
+      res.status(500).json({
+        error: 'Failed to complete operation: DashboardData'
+      });
+    });
 }
 
 // U

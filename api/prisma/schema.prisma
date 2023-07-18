@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model comics {
+  id             Int          @id @default(autoincrement())
+  publisher_id   Int
+  title          String       @db.VarChar(255)
+  issue          Int
+  year           Int
+  writer_id      Int
+  illustrator_id Int
+  illustrators   illustrators @relation(fields: [illustrator_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  publishers     publishers   @relation(fields: [publisher_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  writers        writers      @relation(fields: [writer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model illustrators {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique @db.VarChar(255)
+  comics comics[]
+}
+
+model publishers {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique @db.VarChar(255)
+  comics comics[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model spatial_ref_sys {
+  srid      Int     @id
+  auth_name String? @db.VarChar(256)
+  auth_srid Int?
+  srtext    String? @db.VarChar(2048)
+  proj4text String? @db.VarChar(2048)
+}
+
+model writers {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique @db.VarChar(255)
+  comics comics[]
+}

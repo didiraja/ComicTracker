@@ -69,12 +69,13 @@ const DataTable = (
                       ))
                     }
 
+
                     {
                       remove ?
                         <td className="table-item">
                           {/* <button type="button" className="btn edit-btn">
                             <Edity />
-                          </button> */}
+                          </button>  */}
                           <button
                             type="button"
                             className="btn delete-btn"

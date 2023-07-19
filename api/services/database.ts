@@ -32,30 +32,6 @@ export const StartingDB = () => {
   //   });
 }
 
-export const allComics = async () => await prisma.comics.findMany({
-  select: {
-    id: true,
-    title: true,
-    issue: true,
-    year: true,
-    publishers: {
-      select: {
-        name: true
-      }
-    },
-    writers: {
-      select: {
-        name: true
-      }
-    },
-    illustrators: {
-      select: {
-        name: true
-      }
-    }
-  }
-});
-
 export const allPublishers = async () => await prisma.publishers.findMany();
 
 export const allWriters = async () => await prisma.writers.findMany();

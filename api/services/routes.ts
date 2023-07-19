@@ -1,31 +1,48 @@
 import { Request, Response } from "express"
+import { prisma } from "./database";
 import { InterfaceComic } from "../types";
-import { QUERIES } from '../enum';
-import { allComics, prisma } from "./database";
 
 // C
 export const AddComic = (req: Request, res: Response) => {
 
-  // const { publisher: publisher_id, title, issue, year, writer: writer_id, illustrator: illustrator_id }: InterfaceComic = req.body;
+  const { publisher, title, issue, year, writer, illustrator }: InterfaceComic = req.body;
 
-  // try {
-  //   db.run(QUERIES.NEW_COMIC,
-  //     [publisher_id, title, issue, year, writer_id, illustrator_id],
-  //     function (err) {
+  async function insertComic() {
 
-  //       if (err) {
-  //         console.error(err);
-  //         res.status(500).json({ error: 'Failed to create comic' });
-  //       }
-  //     }
-  //   );
-  // } catch {
-  //   res.status(500).json({ error: 'Failed to complete operation' });
-  // } finally {
-  //   res.status(200).send({
-  //     msg: "Comic added sucessfully!",
-  //   });
-  // }
+    try {
+
+      return await prisma.comics.create({
+        data: {
+          title,
+          issue: Number(issue),
+          year: Number(year),
+          publisher_id: Number(publisher),
+          writer_id: Number(writer),
+          illustrator_id: Number(illustrator),
+        }
+      })
+    } catch (error) {
+
+      console.error('An error occurred while inserting comic', error);
+    } finally {
+
+      await prisma.$disconnect();
+    }
+  }
+
+  insertComic()
+    .then(() => res.status(200).send({
+      msg: "Comic inserted sucessfully!",
+    }))
+    .catch((e) => {
+      console.error(e);
+
+      res.status(500).json({ error: 'Failed to complete operation' });
+    })
+    .finally(async () => {
+      await prisma.$disconnect();
+    });
+
 }
 
 export const AddEntry = (req: Request, res: Response) => {
@@ -127,7 +144,7 @@ export const GetDashData = (_: Request, res: Response) => {
 
   async function fetchAllTables() {
     try {
-      const [comics, publishers, writers, illustrators] = await Promise.all([
+      const [comicsQuery, publishers, writers, illustrators] = await Promise.all([
         prisma.comics.findMany({
           select: {
             id: true,
@@ -156,6 +173,22 @@ export const GetDashData = (_: Request, res: Response) => {
         prisma.illustrators.findMany()
       ]);
 
+      const comics = comicsQuery.map(comic => {
+
+        const { id, title, issue, year, publishers, writers, illustrators } = comic;
+
+        return {
+          id,
+          title,
+          issue,
+          year,
+          publisher: publishers.name,
+          writer: writers.name,
+          illustrator: illustrators.name
+        };
+
+      });
+
       const response = {
         comics,
         publishers,
@@ -183,6 +216,9 @@ export const GetDashData = (_: Request, res: Response) => {
       res.status(500).json({
         error: 'Failed to complete operation: DashboardData'
       });
+    })
+    .finally(async () => {
+      await prisma.$disconnect();
     });
 }
 

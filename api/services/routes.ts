@@ -47,96 +47,86 @@ export const AddComic = (req: Request, res: Response) => {
 
 export const AddEntry = (req: Request, res: Response) => {
 
-  //  const { publisher, name, writer, illustrator }: Partial<InterfaceComic> = req.body;
+  const { publisher, name, writer, illustrator }: Partial<InterfaceComic> = req.body;
 
-  //  function capitalizeFirstCharacter(str: string | undefined) {
+  function capitalizeFirstCharacter(str: string | undefined) {
 
-  //   if (str) {
-  //     return str.split(' ')
-  //       .map(block => block.charAt(0).toUpperCase() + block.slice(1))
-  //       .join(' ');
-  //   }
+    if (str) {
+      return str.split(' ')
+        .map(block => block.charAt(0).toUpperCase() + block.slice(1))
+        .join(' ');
+    }
 
-  //   return '';
-  //  }
+    throw new Error("capitalize function should receive a string");
+  }
 
-  // try {
+  async function insertEntry() {
 
-  //   if (publisher) {
-  //     const sanitized = capitalizeFirstCharacter(publisher); 
+    try {
+      if (publisher) {
+        const sanitized = capitalizeFirstCharacter(publisher);
 
-  //     db.run(QUERIES.NEW_PUBLISHER,
-  //       [sanitized],
-  //       function (err) {
+        return await prisma.publishers.create({
+          data: {
+            name: sanitized,
+          }
+        })
+      }
 
-  //         if (err) {
-  //           console.error(err);
-  //           res.status(500).json({ error: 'Failed to create entry' });
-  //         }
-  //       }
-  //     );
+      if (name) {
+        const sanitized = capitalizeFirstCharacter(name);
 
-  //     return;
-  //   }
+        const insertWriter = async () => {
+          return await prisma.writers.create({
+            data: {
+              name: sanitized,
+            }
+          })
+        }
 
-  //   if (name) {
-  //     const sanitized = capitalizeFirstCharacter(name); 
+        const insertIllustrator = async () => {
+          return await prisma.illustrators.create({
+            data: {
+              name: sanitized,
+            }
+          })
+        }
 
-  //     const newWriter = () => {
-  //       db.run(QUERIES.NEW_WRITER,
-  //         [sanitized],
-  //         function (err) {
+        if (writer && illustrator) {
+          await insertWriter();
+          await insertIllustrator();
+          return;
+        }
 
-  //           if (err) {
-  //             console.error(err);
-  //             res.status(500).json({ error: 'Failed to create entry' });
-  //           }
-  //         }
-  //       );
-  //     }
+        if (writer) {
+          await insertWriter();
+          return;
+        }
 
-  //     const newIllustrator = () => {
-  //       db.run(QUERIES.NEW_ILLUSTRATOR,
-  //         [sanitized],
-  //         function (err) {
+        if (illustrator) {
+          await insertIllustrator();
+          return;
+        }
+      }
 
-  //           if (err) {
-  //             console.error(err);
-  //             res.status(500).json({ error: 'Failed to create entry' });
-  //           }
-  //         }
-  //       );
-  //     }
+    } catch (error) {
+      console.error('An error occurred while creating an entry', error);
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
 
-  //     if (writer && illustrator) {
-
-  //       newWriter();
-  //       newIllustrator();
-  //       return;
-  //     }
-
-  //     if (writer) {
-
-  //       newWriter();
-  //       return;
-  //     }
-
-  //     if (illustrator) {
-
-  //       newIllustrator();
-  //       return;
-  //     }
-
-  //   }
-
-  // } catch {
-  //   res.status(500).json({ error: 'Failed to complete operation' });
-  // } finally {
-  //   res.status(200).send({
-  //     msg: "Entry created sucessfully!",
-  //   });
-  // }
-
+  insertEntry()
+    .then(() => res.status(200).send({
+      msg: "Entry created sucessfully!",
+    }))
+    .catch((e) => {
+      console.error(e);
+      res.status(500).json({ error: 'Failed to complete operation' });
+    })
+    .finally(async () => {
+      await prisma.$disconnect();
+    });
 }
 
 // R

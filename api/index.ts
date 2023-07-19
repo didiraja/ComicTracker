@@ -38,7 +38,7 @@ app.get("*", (_, res) => res.status(404).send({
 /**
  * POST
  */
-// app.post('/entry', AddEntry);
+app.post('/entry', AddEntry);
 
 app.post('/comics', AddComic);
 

@@ -247,22 +247,37 @@ export const EditComic = (req: Request, res: Response) => {
 
 // D
 export const DeleteComic = (req: Request, res: Response) => {
-  // const { id } = req.params;
 
-  // try {
-  //   db.run(QUERIES.DELETE_COMIC, [id],
-  //     function (err) {
-  //       if (err) {
-  //         console.error(err);
-  //         res.status(500).json({ error: 'Failed to delete comic' });
-  //       } else if (this.changes === 0) {
-  //         res.status(404).json({ error: 'Comic not found' });
-  //       }
-  //     }
-  //   );
-  // } catch {
-  //   res.status(500).json({ error: 'Failed to complete operation' });
-  // } finally {
-  //   res.status(200).json({ msg: 'Comic deleted successfully' });
-  // }
+  const { id } = req.params;
+
+  async function insertComic() {
+
+    try {
+
+      return await prisma.comics.delete({
+        where: {
+          id: Number(id),
+        }
+      })
+    } catch (error) {
+
+      console.error('An error occurred while inserting comic', error);
+    } finally {
+
+      await prisma.$disconnect();
+    }
+  }
+
+  insertComic()
+    .then(() => res.status(200).send({
+      msg: "Comic deleted sucessfully!",
+    }))
+    .catch((e) => {
+      console.error(e);
+
+      res.status(500).json({ error: 'Failed to complete operation' });
+    })
+    .finally(async () => {
+      await prisma.$disconnect();
+    });
 }

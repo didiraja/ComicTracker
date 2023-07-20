@@ -156,6 +156,10 @@ export const GetDashData = (_: Request, res: Response) => {
                 name: true
               }
             }
+          },
+          take: 10,
+          orderBy: {
+            id: 'desc'
           }
         }),
         prisma.publishers.findMany(),
